@@ -7,9 +7,11 @@ from wtforms.validators import DataRequired
 import requests
 import tkinter
 from tkinter import messagebox
+import os
+# 26845bb5f53542ea6e70144a76f123ad
+# os.environ.get('MOVIE_DB_API_KEY')
 
-
-MOVIE_DB_API_KEY = '26845bb5f53542ea6e70144a76f123ad'
+MOVIE_DB_API_KEY = os.environ.get("API_KEY")
 MOVIE_DB_API_TOP_RATED_URL = 'https://api.themoviedb.org/3/movie/top_rated'
 MOVIE_DB_SEARCH_URL = "https://api.themoviedb.org/3/search/movie"
 MOVIE_DB_INFO_URL = "https://api.themoviedb.org/3/movie"
@@ -17,12 +19,11 @@ MOVIE_DB_IMAGE_URL = "https://image.tmdb.org/t/p/w500"
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = os.environ.get("FLASK_KEY")
 Bootstrap5(app)
 
 # create DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///movies.db'
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DBI_URI", "sqlite:///movies.db")
 db = SQLAlchemy()
 db.init_app(app)
 
@@ -187,4 +188,4 @@ def delete_movie():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
