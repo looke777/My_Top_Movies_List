@@ -8,8 +8,7 @@ import requests
 import tkinter
 from tkinter import messagebox
 import os
-# 26845bb5f53542ea6e70144a76f123ad
-# os.environ.get('MOVIE_DB_API_KEY')
+
 
 MOVIE_DB_API_KEY = os.environ.get("API_KEY")
 MOVIE_DB_API_TOP_RATED_URL = 'https://api.themoviedb.org/3/movie/top_rated'
@@ -23,7 +22,7 @@ app.config['SECRET_KEY'] = os.environ.get("FLASK_KEY")
 Bootstrap5(app)
 
 # create DB
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DBI_URI", "sqlite:///movies.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI", "sqlite:///movies.db")
 db = SQLAlchemy()
 db.init_app(app)
 
@@ -95,8 +94,6 @@ def home():
 
 @app.route("/mylist")
 def my_list():
-    # result = db.session.execute(db.select(MyMovie))
-    # my_movies = result.scalars()
     my_movies = MyMovie.query.order_by(MyMovie.rating.desc()).all()
     db.session.commit()
     return render_template("my_list.html", movies=my_movies)
