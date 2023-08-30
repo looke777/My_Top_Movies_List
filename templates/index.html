@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}My Top Watched Movies List{% endblock %}
+
+{%block content %}
+<div class="container">
+  <h1 class="heading">Top 100 Movies</h1>
+  <p class="description">These are all time favourite movies according to The Movie DB.</p>
+
+  {% for movie in movies %}
+  <div class="card">
+    <div class="front" style="background-image: url('{{movie.img_url}}');"></div>
+    <div class="back">
+      <div>
+        <div class="title">
+          {{movie.title}} <span class="release_date">({{movie.year}})</span>
+        </div>
+        <div class="rating">
+          <label>{{movie.rating}}</label>
+          <i class="fas fa-star star"></i>
+        </div>
+        <p class="overview">{{movie.description}}</p>
+
+        <a href="{{ url_for('add_movie', title=movie.title) }}" class="button">Add to My List</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+{% endblock %}
